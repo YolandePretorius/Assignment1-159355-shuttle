@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ThreadsStart {
 	
-	static int MaxnumberPassengers=3;
+	static int MaxnumberPassengers=50;
 
 	public static void main(String[] args) throws InterruptedException {
 		
@@ -12,12 +12,13 @@ public class ThreadsStart {
 		
 		System.out.println("******************  Welcome to our transport services  ******************");
 		
-		TravelDirection TDirection  = new TravelDirection(MaxnumberPassengers);
+		TravelDirection TDirection  = new TravelDirection();
 		
 		TravelSouth TSouth = new TravelSouth(TDirection);
 		
-		for (int i = 1; i < MaxnumberPassengers; i++) {
+		for (int i = 1; i <= MaxnumberPassengers; i++) {
 			Thread customerTravelSouth = new Thread(TSouth,"Customer# "+i);
+			//System.out.println("Threads size" + threads.size());
 			threads.add(customerTravelSouth);
 			customerTravelSouth.start();
 			

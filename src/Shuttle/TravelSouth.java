@@ -12,8 +12,10 @@ public class TravelSouth implements Runnable{
 
 	@Override
 	public void run() {
+		
 		System.out.println("Customer are traveling south "+ Thread.currentThread().getName());
-		TravelDirection.addPassengers();
+		TravelDirection.allAboard();
+		
 		
 	}
 

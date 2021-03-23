@@ -1,11 +1,12 @@
+// Class loads passengers and off loads passengers
 package Shuttle;
 
 import java.util.concurrent.Semaphore;
 
 public class TravelShuttle {
 	
-	static Semaphore passengersSem;
-	static Semaphore mutex;
+	
+	static Semaphore mutex; // provides mutual exclusion of critical area where  numerous variables are increased and decreased by threads
 	static int MaxnumberPassengers;
 	static int numberPassengers;
 	static int passengersTransported;
@@ -16,18 +17,18 @@ public class TravelShuttle {
 
 
 	public TravelShuttle() {
-		passengersSem =  new Semaphore(3,true);
+		
 		mutex = new Semaphore(1,true);
 		MaxnumberPassengers = 10;
 		travelingDirectionVariable = true;
 		passengersTransported = 0;
 	}
-
+	
+	// Passenger threads enters and request the mutex to get permission into critical area
 	public static boolean loadShuttle(Boolean travelDirection) throws InterruptedException {
-		//passengersSem.acquireUninterruptibly();
 		travelDirectionName(travelingDirectionVariable);
 		mutex.acquireUninterruptibly();
-		if(travelDirection == travelingDirectionVariable) {
+		if(travelDirection == travelingDirectionVariable) { // thread going in same direction as shutlle will get get on else they wait for their turn 
 			if(numberPassengers < MaxnumberPassengers) {
 				passengersTransported++;
 				numberPassengers++;
@@ -41,10 +42,7 @@ public class TravelShuttle {
 				mutex.release();
 				return false;
 			}
-			//else
-			//{
-				//System.out.println(numberPassengers+" seats occupied, traveling to " + Direction + ", total transported: " + passengersTransported);
-			//}
+			
 		}
 		else 
 		{
@@ -56,20 +54,21 @@ public class TravelShuttle {
 	}
 	
 	
-	public static void ofloadPassengers() {
+	public static void ofloadPassengers() {   // function off loads customers and changes direction of shuttle
 		numberPassengers = 0;
 		transportTrips++;
-		//travelingDirectionVariableNew = !(travelingDirectionVariable);
+
 		travelingDirectionOld = travelingDirectionVariable;
 		travelingDirectionVariable = !travelingDirectionVariable;
 		
-		System.out.println("Passengers exiting shuttle, trips complted: " + transportTrips);
+		System.out.println("Passengers exiting shuttle, trips completed: " + transportTrips);
+		System.out.println(" ");
 		System.out.println("Shuttle returning from " + getTravelDirectionName(travelingDirectionOld) + " now travelling to " + getTravelDirectionName(travelingDirectionVariable) + " -> seats occupied: " + numberPassengers);
 		System.out.println("............................");		
 		
-		//mutex.release();
+		
 	}
-	
+	// function gives a boolean direction a name
 	public static void travelDirectionName(Boolean travelingDirectionVariable2travelingDirectionVariable) {
 		if (travelingDirectionVariable == false) {
 			 Direction = "North Shore";

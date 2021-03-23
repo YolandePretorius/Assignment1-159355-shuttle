@@ -1,3 +1,4 @@
+// Class create passenger threads that travels either to Auckland or to North Shore
 package Shuttle;
 
 public class Passenger implements Runnable{
@@ -14,7 +15,7 @@ public class Passenger implements Runnable{
 	public void run() {
 		
 		while(true) {
-		//System.out.println("Passenger " + Thread.currentThread().getName()+ " is traveling "+ travelDirection);		
+			
 		
 			try {
 				
@@ -23,15 +24,12 @@ public class Passenger implements Runnable{
 			} 
 			catch (InterruptedException e1) 
 			{
-				//System.out.println(Thread.currentThread().getName()+" loadShuttle exception.");
 				break;
 			}
 				
 		
-			if(TryEnter == false) {
-				//System.out.println(Thread.currentThread().getName()+" has boarded the bus!");
-				//Thread.currentThread().join();
-				//valid = false;
+			if(TryEnter == false) { // if the thread is completed it will be interupted and terminate
+				
 				break;
 			}
 			else
@@ -43,12 +41,11 @@ public class Passenger implements Runnable{
 				Thread.sleep(2000);
 			} 
 			catch (InterruptedException e) {
-				//System.out.println(Thread.currentThread().getName()+" sleep exception.");
+				
 			}		
-	
 		}
 		
-		System.out.println("...........Passenger " + Thread.currentThread().getName()+ " is done traveling");		
+				
 	}
 }
 		
